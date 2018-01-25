@@ -3,74 +3,74 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+         #
+#    By: vle-gal <vle-gal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/12/15 08:32:21 by agrumbac          #+#    #+#              #
-#    Updated: 2017/11/20 16:21:47 by vle-gal          ###   ########.fr        #
+#    Created: 2017/04/16 23:06:16 by vle-gal           #+#    #+#              #
+#    Updated: 2018/01/24 14:09:31 by vle-gal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+NAME = libftprintf.a #Makefile simple
+#les Path finding
 
-NAME = libftprintf.a
+vpath %.c basic
+vpath %.c libft/basic
+vpath_h = -Idoth -Ilibft/doth
 
-LIBSRC = ft_atoi.c ft_bzero.c\
-ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
-ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c \
-ft_lstnew.c ft_memalloc.c ft_memccpy.c ft_memchr.c ft_memcmp.c \
-ft_memcpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_putchar.c \
-ft_putchar_fd.c ft_putendl.c ft_putendl_fd.c ft_putnbr.c ft_putnbr_fd.c \
-ft_putstr.c ft_putstr_fd.c ft_strcat.c ft_strchr.c ft_strclr.c \
-ft_strcmp.c ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_striter.c \
-ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c \
-ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c \
-ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c \
-ft_toupper.c
+#les couleurs et autre
 
-SRC = ft_flags.c ft_flags_sec.c ft_printf_long.c ft_printf_u.c \
-ft_printf_d.c ft_printf_p.c ft_printf_x_flags.c \
-ft_printf_c.c ft_printf_o.c ft_printf_u_flags.c \
-ft_printf_d_flags.c ft_printf_s.c ft_printfl.c \
-ft_printf_conversion.c ft_printf_o_flags.c ft_printf_x.c
+Y = "\033[33m"
+R = "\033[31m"
+G = "\033[32m"
+B = "\033[34m"
+X = "\033[0m"
+UP = "\033[A"
+CUT = "\033[K"
 
-OBJ = $(SRC:.c=.o)
+#les pré-règles
 
-LIBOBJ = $(LIBSRC:.c=.o)
+OBJDIR := objdiro
+OBJS := $(addprefix $(OBJDIR)/,ft_isdigit.o  ft_memmove.o  ft_strcmp.o \
+ft_strlen.o ft_strequ.o ft_isprint.o ft_memset.o ft_strcpy.o ft_strmap.o \
+ft_strrchr.o ft_memalloc.o ft_putchar.o ft_strdel.o ft_strncat.o ft_strsplit.o \
+ft_atoi.o ft_memccpy.o ft_putnbr.o ft_strdup.o ft_strncmp.o ft_strstr.o \
+ft_bzero.o ft_memchr.o ft_putstr.o ft_striter.o ft_strncpy.o ft_strsub.o \
+ft_isalnum.o ft_memcmp.o ft_strcat.o ft_striteri.o ft_strnew.o ft_strtrim.o \
+ft_isalpha.o ft_memcpy.o ft_strchr.o ft_strjoin.o  ft_strnequ.o ft_tolower.o \
+ft_isascii.o ft_memdel.o ft_strclr.o ft_strlcat.o ft_strnstr.o ft_toupper.o \
+ft_putchar_fd.o ft_putendl.o ft_putendl_fd.o ft_putnbr_fd.o ft_putstr_fd.o \
+ft_strmapi.o ft_itoa.o ft_lstnew.o ft_lstdelone.o ft_lstdel.o ft_lstadd.o \
+ft_lstiter.o ft_lstmap.o ft_swap.o ft_iterative_power.o \
+ft_iterative_factorial.o ft_is_negative.o ft_div_mod.o \
+ft_flags_sec.o ft_flags.o ft_printf_c.o ft_printf_d_flags.o ft_printf_d.o \
+ft_printf_long.o ft_printf_o_flags.o ft_printf_o.o ft_printf_p.o \
+ft_printf_s.o ft_printf_u_flags.o ft_printf_u.o ft_printf_x_flags.o \
+ft_printf_x.o ft_printf_the_main.o)
+$(OBJDIR)/%.o : %.c
+	@echo ${Y}Compiling [$@]...${X}
+	@gcc $(CPPFLAGS) $(CFLAGS) $(vpath_h) -Wall -Wextra -Werror -c \
+	$(OUTPUT_OPTION) $<
+	@printf ${UP}${CUT}
 
-SRCDIR = ./srcs/
+#les règles
 
-LIBOBJDIR = ./libft/objs/
+all: $(NAME)
 
-CFLAGS = -Wall -Wextra -Werror
+$(NAME): $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
+	@echo ${Y}Success"  "[${NAME}]${X}
+	@echo $(R)Oh, God. Never underestimate the power of stupid things \
+	in large numbers!
+$(OBJS): | $(OBJDIR)
+$(OBJDIR):
+	@mkdir $(OBJDIR)
 
-CC = gcc
+#les outils
 
-all:${NAME}
-
-${NAME}:
-	make -C libft/ fclean && make -C libft/
-	${CC} -Ilibft/doth/ -I. -c $(addprefix ${SRCDIR}, ${SRC}) ${CFLAGS}
-	ar rc ${NAME} ${OBJ} $(addprefix ${LIBOBJDIR}, ${LIBOBJ})
-	ranlib ${NAME}
-
-clean:
-	rm -f ${OBJ}
-	make -C libft/ clean
-
-fclean: clean
-	rm -f ${NAME}
-	make -C libft/ fclean
-
-re: fclean all
-
-build:
-	@${CC} -Ilibft/doth/ -I. -c $(addprefix ${SRCDIR}, ${SRC})
-	@ar rcs ${NAME} ${OBJ} $(addprefix ${LIBOBJDIR}, ${LIBOBJ})
-
-test:
-	@rm -f test
-	@rm -f a.out
-	@${CC} printf_main.c ${NAME} -o test
-	./test
-
-.PHONY: clean fclean test build
-
-#make build && make test && ./test
+clean :
+	@rm -rf $(OBJS) $(OBJDIR)
+	@echo $(R)Die when I kill you!
+fclean : clean
+	@rm -rf ./objdiro $(NAME)
+	@echo Twice!
+re : fclean
+	@make

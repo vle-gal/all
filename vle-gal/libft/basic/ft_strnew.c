@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_main.c                                      :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vle-gal <vle-gal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/18 19:09:12 by vle-gal           #+#    #+#             */
-/*   Updated: 2018/01/24 16:36:51 by vle-gal          ###   ########.fr       */
+/*   Created: 2017/04/15 18:38:46 by vle-gal           #+#    #+#             */
+/*   Updated: 2017/11/09 13:18:08 by vle-gal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "libft.h"
 
-int	main(void)
+char	*ft_strnew(size_t size)
 {
-	printf("--------\n");
-	printf("\n--------\n");
-	printf("\n");
-	printf("%d\n", -2147483648);
-	ft_printf("%d\n", -2147483648);
-	return (0);
+	char *str;
+
+	str = ft_memalloc(size + 1);
+	if (str == NULL)
+		return (NULL);
+	return (str);
 }

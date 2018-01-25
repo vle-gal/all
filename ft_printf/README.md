@@ -1,2 +1,2 @@
-# libft
-my libft
+# test
+test
